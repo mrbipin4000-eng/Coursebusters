@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CourseBusters - Access</title>
+  <meta name="description" content="CourseBusters Telegram Entry Portal" />
+  <link
+    rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>"
+  />
+  <style>
+    /* Reset & Base */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    }
+
+    /* Main Container */
+    .container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background-color: #0a0e27;
+      cursor: none;
+    }
+
+    /* Background Video */
+    .background-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      z-index: 1;
+      opacity: 1;
+    }
+
+    /* Particle Canvas */
+    .canvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 1;
+    }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 20px;
+      left: 30px;
+      z-index: 3;
+      padding: 20px 32px;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #ffffff;
+      text-shadow: 0 0 20px rgba(59, 130, 246, 0.6),
+        0 0 40px rgba(59, 130, 246, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    .cursor {
+      opacity: 1;
+      animation: blink 0.8s step-end infinite;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    @keyframes blink {
+      0%,
+      50% {
+        opacity: 1;
+      }
+      51%,
+      100% {
+        opacity: 0;
+      }
+    }
+
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Logo */
+    .logo {
+      animation: breathe 4s ease-in-out infinite;
+      filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.25));
+      perspective: 1000px;
+    }
+
+    @keyframes breathe {
+      0%,
+      100% {
+        opacity: 0.85;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.02);
+      }
+    }
+
+    /* Animated Text Logo */
+    .animated-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      perspective: 1000px;
+    }
+
+    .text-line1,
+    .text-line2 {
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow: 0 0 30px rgba(59, 130, 246, 0.8),
+        0 0 60px rgba(59, 130, 246, 0.5),
+        0 4px 16px rgba(0, 0, 0, 0.9),
+        0 2px 4px rgba(0, 0, 0, 1);
+    }
+
+    .text-line1 {
+      font-size: 3rem;
+      animation: floatText 3s ease-in-out infinite;
+    }
+
+    .text-line2 {
+      font-size: 2.2rem;
+      animation: floatText 3s ease-in-out infinite 0.5s;
+    }
+
+    @keyframes floatText {
+      0%,
+      100% {
+        transform: translateY(0px) scale(1);
+      }
+      50% {
+        transform: translateY(-15px) scale(1.05);
+      }
+    }
+
+    /* Access Button (liquid glass) */
+    .access-button {
+      position: relative;
+      display: inline-block;
+      padding: 18px 56px;
+      font-size: 1.125rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 50px;
+      text-decoration: none;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 8px 32px rgba(59, 130, 246, 0.4),
+        0 4px 16px rgba(59, 130, 246, 0.2),
+        inset 0 1px 1px rgba(255, 255, 255, 0.2),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.1);
+      transform-style: preserve-3d;
+      will-change: transform;
+      animation: buttonFloat 3s ease-in-out infinite;
+    }
+
+    .access-button::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -150%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        120deg,
+        transparent,
+        transparent 40%,
+        rgba(255, 255, 255, 0.4) 50%,
+        transparent 60%,
+        transparent
+      );
+      transform: skewX(-25deg);
+      animation: shimmer 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes shimmer {
+      0% {
+        left: -150%;
+      }
+      50%,
+      100% {
+        left: 150%;
+      }
+    }
+
+    @keyframes buttonFloat {
+      0%,
+      100% {
+        transform: translateY(0px) rotateX(0deg);
+      }
+      50% {
+        transform: translateY(-8px) rotateX(2deg);
+      }
+    }
+
+    .access-button::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 54px;
+      background: linear-gradient(
+        45deg,
+        rgba(59, 130, 246, 0.6),
+        rgba(96, 165, 250, 0.6),
+        rgba(59, 130, 246, 0.6)
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      filter: blur(12px);
+      z-index: -1;
+    }
+
+    .access-button:hover {
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 12px 40px rgba(59, 130, 246, 0.5),
+        0 6px 20px rgba(59, 130, 246, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.3),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.1);
+      animation: buttonFloat 1.5s ease-in-out infinite;
+      transform: translateY(-4px);
+    }
+
+    .access-button:hover::after {
+      opacity: 1;
+      animation: glowPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0%,
+      100% {
+        opacity: 0.7;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .access-button:active {
+      animation: bounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes bounce {
+      0% {
+        transform: scale(1);
+      }
+      30% {
+        transform: scale(0.97);
+      }
+      60% {
+        transform: scale(1.03);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* Active users ticker - liquid glass chip (darker, less bright) */
+    .active-users-chip {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 22px;
+      border-radius: 999px;
+      background: radial-gradient(
+        circle at top,
+        rgba(30, 64, 175, 0.75),
+        rgba(15, 23, 42, 0.96)
+      );
+      backdrop-filter: blur(18px) saturate(170%);
+      -webkit-backdrop-filter: blur(18px) saturate(170%);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.9),
+        0 0 18px rgba(59, 130, 246, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(226, 232, 240, 0.9);
+      overflow: hidden;
+      animation: chipFloat 4s ease-in-out infinite;
+    }
+
+    .active-users-chip::before {
+      /* softer highlight sweep */
+      content: "";
+      position: absolute;
+      top: -80%;
+      left: -150%;
+      width: 200%;
+      height: 260%;
+      background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.25),
+        transparent
+      );
+      opacity: 0.25;
+      transform: skewX(-25deg);
+      animation: chipShimmer 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes chipFloat {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-4px);
+      }
+    }
+
+    @keyframes chipShimmer {
+      0% {
+        left: -150%;
+      }
+      60%,
+      100% {
+        left: 160%;
+      }
+    }
+
+    .active-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 6px rgba(34, 197, 94, 0.7);
+      position: relative;
+    }
+
+    .active-dot::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: inherit;
+      border: 1px solid rgba(34, 197, 94, 0.55);
+      opacity: 0.5;
+      animation: ping 1.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    @keyframes ping {
+      0% {
+        transform: scale(1);
+        opacity: 0.7;
+      }
+      100% {
+        transform: scale(1.6);
+        opacity: 0;
+      }
+    }
+
+    .active-label {
+      color: rgba(226, 232, 240, 0.9);
+      text-shadow: none;
+    }
+
+    .active-label span#activeUsers {
+      font-weight: 700;
+      color: #bfdbfe;
+      text-shadow: 0 0 8px rgba(59, 130, 246, 0.7);
+    }
+
+    /* Preloader overlay */
+    .preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(
+        circle at top,
+        #1d2556 0%,
+        #020617 60%,
+        #000 100%
+      );
+      color: #e5e7eb;
+      overflow: hidden;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .preloader::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(
+          circle at 0% 0%,
+          rgba(59, 130, 246, 0.2),
+          transparent 55%
+        ),
+        radial-gradient(
+          circle at 100% 100%,
+          rgba(37, 99, 235, 0.25),
+          transparent 55%
+        );
+      opacity: 0.9;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .preloader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    /* Preloader inner panel - liquid glass card */
+    .preloader-inner {
+      position: relative;
+      padding: 32px 36px;
+      border-radius: 24px;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.15),
+        rgba(15, 23, 42, 0.85)
+      );
+      backdrop-filter: blur(26px) saturate(220%);
+      -webkit-backdrop-filter: blur(26px) saturate(220%);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.95),
+        0 0 55px rgba(37, 99, 235, 0.85),
+        inset 0 1px 1px rgba(255, 255, 255, 0.3),
+        inset 0 -1px 1px rgba(15, 23, 42, 0.9);
+      width: min(460px, 92vw);
+      overflow: hidden;
+      animation: glassFloat 4.5s ease-in-out infinite;
+    }
+
+    .preloader-inner::before {
+      content: "COURSEBUSTERS GATEWAY";
+      position: absolute;
+      top: 14px;
+      right: 22px;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(15, 23, 42, 0.9);
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+      z-index: 2;
+    }
+
+    .preloader-inner::after {
+      /* soft highlight sweep on the card */
+      content: "";
+      position: absolute;
+      top: -40%;
+      left: -20%;
+      width: 140%;
+      height: 80%;
+      background: radial-gradient(
+        circle at top,
+        rgba(255, 255, 255, 0.5),
+        transparent 60%
+      );
+      opacity: 0.7;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    @keyframes glassFloat {
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        transform: translateY(-6px) scale(1.01);
+      }
+    }
+
+    .preloader-title {
+      font-size: 0.95rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      color: #020617;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+      position: relative;
+      z-index: 2;
+    }
+
+    .preloader-title::before {
+      content: "";
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: conic-gradient(
+        from 180deg,
+        rgba(59, 130, 246, 1),
+        rgba(56, 189, 248, 1),
+        rgba(59, 130, 246, 1)
+      );
+      box-shadow: 0 0 18px rgba(59, 130, 246, 0.9);
+      animation: spinOrb 1.4s linear infinite;
+    }
+
+    @keyframes spinOrb {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .preloader-progress {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 8px;
+      color: rgba(15, 23, 42, 0.9);
+      position: relative;
+      z-index: 2;
+    }
+
+    .preloader-percent {
+      font-variant-numeric: tabular-nums;
+      color: #1d4ed8;
+      text-shadow: 0 0 10px rgba(59, 130, 246, 0.9),
+        0 0 24px rgba(191, 219, 254, 0.9);
+    }
+
+    .preloader-bar {
+      position: relative;
+      width: 100%;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(
+        circle at top,
+        rgba(15, 23, 42, 0.95),
+        rgba(15, 23, 42, 0.6)
+      );
+      overflow: hidden;
+      margin-bottom: 10px;
+      box-shadow: 0 0 16px rgba(37, 99, 235, 0.8),
+        inset 0 0 6px rgba(15, 23, 42, 1);
+    }
+
+    .preloader-bar::before {
+      /* inner glass edge */
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: inherit;
+      border-top: 1px solid rgba(255, 255, 255, 0.35);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.9);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .preloader-bar-fill {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      width: 0%;
+      background: linear-gradient(90deg, #22c55e, #a3e635, #22c55e);
+      box-shadow: 0 0 16px rgba(22, 163, 74, 0.9),
+        0 0 32px rgba(74, 222, 128, 0.9);
+      transition: width 0.12s ease-out;
+    }
+
+    .preloader-bar-fill::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -8%;
+      width: 60px;
+      height: 200%;
+      background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.9),
+        transparent 70%
+      );
+      opacity: 0.75;
+      filter: blur(8px);
+    }
+
+    .preloader-subtext {
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(15, 23, 42, 0.9);
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+      position: relative;
+      z-index: 2;
+    }
+
+    .preloader-subtext span {
+      opacity: 0.9;
+    }
+
+    .preloader-subtext span:last-child {
+      font-variant-numeric: tabular-nums;
+      color: rgba(30, 64, 175, 0.98);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .brand-name {
+        font-size: 1.25rem;
+      }
+      .cursor {
+        font-size: 1.25rem;
+      }
+      .text-line1 {
+        font-size: 2.2rem;
+      }
+      .text-line2 {
+        font-size: 1.6rem;
+      }
+      .access-button {
+        padding: 14px 42px;
+        font-size: 1rem;
+      }
+      .content {
+        gap: 32px;
+      }
+
+      .preloader-inner {
+        padding: 26px 24px;
+        border-radius: 20px;
+      }
+      .preloader-title {
+        font-size: 0.8rem;
+      }
+      .preloader-inner::before {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand-name {
+        font-size: 1rem;
+      }
+      .cursor {
+        font-size: 1rem;
+      }
+      .text-line1 {
+        font-size: 1.6rem;
+      }
+      .text-line2 {
+        font-size: 1.2rem;
+      }
+      .access-button {
+        padding: 12px 36px;
+        font-size: 0.9375rem;
+      }
+      .content {
+        gap: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader with decrypting access token counter -->
+  <div id="preloader" class="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-title">ACCESS NODE: TELEGRAM GATEWAY</div>
+      <div class="preloader-progress">
+        <span class="preloader-label">Decrypting access token</span>
+        <span id="preloaderPercent" class="preloader-percent">0%</span>
+      </div>
+      <div class="preloader-bar">
+        <div class="preloader-bar-fill" id="preloaderBarFill"></div>
+      </div>
+      <div class="preloader-subtext">
+        <span>Routing through encrypted relays…</span>
+        <span>NODE STATUS: SECURE</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Background Video -->
+    <video
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="auto"
+      class="background-video"
+    >
+      <source src="video1.mp4" type="video/mp4" />
+    </video>
+
+    <!-- Particle canvas -->
+    <canvas id="canvas" class="canvas"></canvas>
+
+    <!-- Header with logo -->
+    <header class="header">
+      <div class="header-logo">
+        <span class="brand-name"
+          ><span id="typed-text"></span><span class="cursor">|</span></span
+        >
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="logo">
+        <div class="animated-text">
+          <span class="text-line1">COURSE BUSTERS</span>
+          <span class="text-line2">ACCESS</span>
+        </div>
+      </div>
+
+      <a
+        id="access-button"
+        href="https://t.me/+EAdc-W84STQyNTNk"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="access-button"
+      >
+        GET ACCESS HERE
+      </a>
+
+      <!-- Active users counter -->
+      <div class="active-users-chip">
+        <span class="active-dot"></span>
+        <span class="active-label">
+          <span id="activeUsers">1,240</span> STUDENTS ACCESSING NOW
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Preloader with decrypting access token counter
+    (function () {
+      const preloader = document.getElementById("preloader");
+      const percentEl = document.getElementById("preloaderPercent");
+      const barFill = document.getElementById("preloaderBarFill");
+
+      if (!preloader || !percentEl || !barFill) return;
+
+      let progress = 0;
+      let loaded = false;
+
+      function setProgress(value) {
+        progress = Math.min(100, value);
+        percentEl.textContent = progress.toFixed(0) + "%";
+        barFill.style.width = progress + "%";
+      }
+
+      const fakeInterval = setInterval(() => {
+        if (loaded) return;
+        if (progress >= 86) return;
+        const increment = Math.random() * 5;
+        setProgress(progress + increment);
+      }, 120);
+
+      function hidePreloader() {
+        preloader.classList.add("hidden");
+      }
+
+      window.addEventListener("load", () => {
+        if (loaded) return;
+        loaded = true;
+        clearInterval(fakeInterval);
+        setProgress(100);
+        setTimeout(hidePreloader, 500);
+      });
+
+      // Fallback in case load takes too long / video blocked
+      setTimeout(() => {
+        if (loaded) return;
+        loaded = true;
+        clearInterval(fakeInterval);
+        setProgress(100);
+        setTimeout(hidePreloader, 500);
+      }, 6000);
+    })();
+
+    // Typing effect with proper tab visibility handling
+    const fullText = "COURSEBUSTERS";
+    const typedTextElement = document.getElementById("typed-text");
+    let currentIndex = 0;
+    let lastTime = 0;
+    let isTyping = true;
+    let pauseTime = 0;
+    const typingSpeed = 150; // ms per character
+    const pauseDuration = 2500; // pause after typing completes
+
+    function typeAnimation(timestamp) {
+      if (!lastTime) lastTime = timestamp;
+      const elapsed = timestamp - lastTime;
+
+      if (isTyping) {
+        if (elapsed >= typingSpeed) {
+          if (currentIndex <= fullText.length) {
+            typedTextElement.textContent = fullText.slice(0, currentIndex);
+            currentIndex++;
+            lastTime = timestamp;
+          } else {
+            isTyping = false;
+            pauseTime = timestamp;
+          }
+        }
+      } else {
+        // Pausing after typing completes
+        if (timestamp - pauseTime >= pauseDuration) {
+          currentIndex = 0;
+          isTyping = true;
+          lastTime = timestamp;
+        }
+      }
+
+      requestAnimationFrame(typeAnimation);
+    }
+
+    // Start the animation
+    requestAnimationFrame(typeAnimation);
+
+    // Active users ticker (subtle random variation)
+    (function () {
+      const activeUsersEl = document.getElementById("activeUsers");
+      if (!activeUsersEl) return;
+
+      let base = 1240;
+
+      function update() {
+        const delta = Math.floor(Math.random() * 30) - 15;
+        base = Math.max(900, base + delta);
+        activeUsersEl.textContent = base.toLocaleString();
+      }
+
+      setInterval(update, 3000 + Math.random() * 3000);
+    })();
+
+    // Particle system
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const button = document.getElementById("access-button");
+
+    // Set canvas size
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    // Particle system variables
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 250 : 450;
+    const particles = [];
+
+    // Cursor position (start at center)
+    let mouseX = canvas.width / 2;
+    let mouseY = canvas.height / 2;
+
+    // Custom cursor trail
+    const cursorTrail = [];
+    const maxTrailLength = 40;
+
+    // Seeded random function for consistent particle positions
+    function seededRandom(seed) {
+      const x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
+    }
+
+    // Initialize particles
+    for (let i = 0; i < particleCount; i++) {
+      const angle = seededRandom(i * 1000) * Math.PI * 2;
+      const speed = seededRandom(i * 1001) * 0.5 + 0.2;
+
+      const orbitRadius = seededRandom(i * 1005) * 40 + 15;
+      const orbitAngle = seededRandom(i * 1006) * Math.PI * 2;
+      const orbitCenterX = seededRandom(i * 1008) * canvas.width;
+      const orbitCenterY = seededRandom(i * 1009) * canvas.height;
+
+      const startX = orbitCenterX + Math.cos(orbitAngle) * orbitRadius;
+      const startY = orbitCenterY + Math.sin(orbitAngle) * orbitRadius;
+
+      particles.push({
+        x: startX,
+        y: startY,
+        size: seededRandom(i * 1004) * 1.5 + 0.5,
+        speedX: Math.cos(angle) * speed,
+        speedY: Math.sin(angle) * speed,
+        opacity: 0.6,
+        fadeDelay: 0,
+        age: 3000,
+        orbitRadius,
+        orbitAngle,
+        orbitSpeed: isMobile
+          ? (seededRandom(i * 1007) - 0.5) * 0.002
+          : (seededRandom(i * 1007) - 0.5) * 0.006,
+        orbitCenterX,
+        orbitCenterY,
+      });
+    }
+
+    // Mouse move handler
+    window.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      cursorTrail.unshift({ x: mouseX, y: mouseY, opacity: 1 });
+      if (cursorTrail.length > maxTrailLength) {
+        cursorTrail.pop();
+      }
+    });
+
+    // Animation loop
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw custom cursor trail
+      cursorTrail.forEach((point, index) => {
+        const progress = index / maxTrailLength;
+        const size = 12 * (1 - progress);
+        const opacity = point.opacity * (1 - progress);
+
+        ctx.save();
+        ctx.globalAlpha = opacity * 0.3;
+        const trailGradient = ctx.createRadialGradient(
+          point.x,
+          point.y,
+          0,
+          point.x,
+          point.y,
+          size * 2
+        );
+        trailGradient.addColorStop(0, "rgba(59, 130, 246, 0.8)");
+        trailGradient.addColorStop(0.5, "rgba(96, 165, 250, 0.4)");
+        trailGradient.addColorStop(1, "rgba(59, 130, 246, 0)");
+        ctx.fillStyle = trailGradient;
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, size * 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        point.opacity *= 0.96;
+      });
+
+      // Draw main cursor orb
+      ctx.save();
+
+      // Outer glow ring
+      ctx.globalAlpha = 0.4;
+      const outerGlow = ctx.createRadialGradient(
+        mouseX,
+        mouseY,
+        0,
+        mouseX,
+        mouseY,
+        24
+      );
+      outerGlow.addColorStop(0, "rgba(59, 130, 246, 0.6)");
+      outerGlow.addColorStop(0.5, "rgba(96, 165, 250, 0.3)");
+      outerGlow.addColorStop(1, "rgba(59, 130, 246, 0)");
+      ctx.fillStyle = outerGlow;
+      ctx.beginPath();
+      ctx.arc(mouseX, mouseY, 24, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Middle glow
+      ctx.globalAlpha = 0.6;
+      const middleGlow = ctx.createRadialGradient(
+        mouseX,
+        mouseY,
+        0,
+        mouseX,
+        mouseY,
+        12
+      );
+      middleGlow.addColorStop(0, "rgba(96, 165, 250, 0.9)");
+      middleGlow.addColorStop(0.7, "rgba(59, 130, 246, 0.5)");
+      middleGlow.addColorStop(1, "rgba(59, 130, 246, 0)");
+      ctx.fillStyle = middleGlow;
+      ctx.beginPath();
+      ctx.arc(mouseX, mouseY, 12, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Core orb
+      ctx.globalAlpha = 1;
+      const coreGradient = ctx.createRadialGradient(
+        mouseX - 2,
+        mouseY - 2,
+        0,
+        mouseX,
+        mouseY,
+        6
+      );
+      coreGradient.addColorStop(0, "rgba(255, 255, 255, 1)");
+      coreGradient.addColorStop(0.4, "rgba(147, 197, 253, 1)");
+      coreGradient.addColorStop(1, "rgba(59, 130, 246, 1)");
+      ctx.fillStyle = coreGradient;
+      ctx.beginPath();
+      ctx.arc(mouseX, mouseY, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+
+      // Draw and update particles
+      particles.forEach((particle) => {
+        particle.age += 16;
+
+        if (particle.age > particle.fadeDelay) {
+          particle.opacity = Math.min(particle.opacity + 0.01, 0.6);
+        }
+
+        // Circular orbit drift
+        particle.orbitAngle += particle.orbitSpeed;
+        const targetX =
+          particle.orbitCenterX +
+          Math.cos(particle.orbitAngle) * particle.orbitRadius;
+        const targetY =
+          particle.orbitCenterY +
+          Math.sin(particle.orbitAngle) * particle.orbitRadius;
+
+        const interpolationSpeed = isMobile ? 0.01 : 0.02;
+        particle.x += (targetX - particle.x) * interpolationSpeed;
+        particle.y += (targetY - particle.y) * interpolationSpeed;
+
+        // Cursor repulsion
+        const dx = particle.x - mouseX;
+        const dy = particle.y - mouseY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const repelRadius = 150;
+
+        if (distance < repelRadius) {
+          const force = (repelRadius - distance) / repelRadius;
+          particle.x += (dx / distance) * force * 3;
+          particle.y += (dy / distance) * force * 3;
+        }
+
+        // Wrap around edges
+        if (particle.x < 0) particle.x = canvas.width;
+        if (particle.x > canvas.width) particle.x = 0;
+        if (particle.y < 0) particle.y = canvas.height;
+        if (particle.y > canvas.height) particle.y = 0;
+
+        // Draw particle with glow
+        ctx.save();
+        ctx.globalAlpha = particle.opacity;
+
+        // Outer glow
+        ctx.beginPath();
+        const gradient = ctx.createRadialGradient(
+          particle.x,
+          particle.y,
+          0,
+          particle.x,
+          particle.y,
+          particle.size * 3
+        );
+        gradient.addColorStop(0, "rgba(255, 255, 255, 0.8)");
+        gradient.addColorStop(0.5, "rgba(250, 228, 66, 0.4)");
+        gradient.addColorStop(1, "rgba(250, 228, 66, 0)");
+        ctx.fillStyle = gradient;
+        ctx.arc(particle.x, particle.y, particle.size * 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Core particle
+        ctx.beginPath();
+        ctx.fillStyle = "#ffffff";
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+      });
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // 3D tilt effect for button
+    if (button) {
+      button.addEventListener("mousemove", (e) => {
+        const rect = button.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -10;
+        const rotateY = ((x - centerX) / centerX) * 10;
+        button.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      button.addEventListener("mouseleave", () => {
+        button.style.transform =
+          "perspective(1000px) rotateX(0deg) rotateY(0deg)";
+      });
+    }
+  </script>
+</body>
+</html>
